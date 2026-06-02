@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>从冲激到特征：RLC 电路动态分析交互展示</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] },
+      svg: { fontCache: "global" }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#hero" aria-label="返回首页">
+      <span class="brand-mark"></span>
+      <span>RLC Signal Lab</span>
+    </a>
+    <nav class="top-nav" aria-label="页面导航">
+      <a href="#object">研究对象</a>
+      <a href="#simulator">交互仿真</a>
+      <a href="#slides">汇报 PPT</a>
+      <a href="#download">下载</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero section">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">信号与系统 · 课堂展示</p>
+        <h1>从冲激到特征：RLC 电路动态分析交互展示</h1>
+        <p class="hero-copy">
+          通过状态方程、数值响应和零极点分布，把串联 RLC 电路的动态行为从公式推导带到可观察的交互图像中。
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#simulator">开始交互仿真</a>
+          <a class="btn ghost" href="#slides">查看汇报 PPT</a>
+        </div>
+      </div>
+      <aside class="hero-panel glass-card reveal">
+        <div class="hero-signal-card" aria-hidden="true">
+          <svg viewBox="0 0 360 168">
+            <defs>
+              <linearGradient id="heroSignal" x1="0" x2="1">
+                <stop offset="0%" stop-color="#2563eb"/>
+                <stop offset="55%" stop-color="#06b6d4"/>
+                <stop offset="100%" stop-color="#10b981"/>
+              </linearGradient>
+            </defs>
+            <path class="hero-axis" d="M28 126 H330 M42 22 V144"/>
+            <path class="hero-wave" d="M42 120 C70 42 105 42 132 118 S194 154 222 78 S278 34 322 96"/>
+            <circle cx="132" cy="118" r="5"/>
+            <circle cx="222" cy="78" r="5"/>
+            <path class="hero-pole" d="M76 48 l14 14 M90 48 l-14 14 M292 42 l14 14 M306 42 l-14 14"/>
+          </svg>
+        </div>
+        <p>默认系统</p>
+        <strong>\(H(s)=\frac{4}{s^2+s+4}\)</strong>
+        <small>\(p=-0.5000\pm j1.9365\)</small>
+      </aside>
+    </section>
+
+    <section id="object" class="section narrow">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Research Object</p>
+        <h2>研究对象：串联 RLC 电路</h2>
+        <p>输入为电压源 u(t)，输出选择电容电压 y(t)=v<sub>C</sub>(t)，用电感电流 i<sub>L</sub> 与电容电压 v<sub>C</sub> 构成状态变量。</p>
+      </div>
+
+      <div class="object-grid">
+        <div class="circuit-card glass-card reveal">
+          <svg class="circuit-svg" viewBox="0 0 860 360" role="img" aria-label="串联 RLC 电路示意图">
+            <defs>
+              <linearGradient id="wireGradient" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#2563eb"/>
+                <stop offset="50%" stop-color="#06b6d4"/>
+                <stop offset="100%" stop-color="#10b981"/>
+              </linearGradient>
+              <filter id="softGlow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <marker id="arrowMarker" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#06b6d4"/>
+              </marker>
+            </defs>
+            <path class="wire" d="M122 184 H210 M310 184 H388 M526 184 H602 M656 184 H744 V278 H122 V226"/>
+            <circle class="source" cx="122" cy="184" r="42"/>
+            <path class="source-wave" d="M100 184 C108 160 136 160 144 184 C136 208 108 208 100 184"/>
+            <path class="resistor" d="M210 184 l13 -28 l25 56 l25 -56 l25 56 l12 -28"/>
+            <path class="inductor" d="M388 184 c0 -26 36 -26 36 0 c0 -26 36 -26 36 0 c0 -26 36 -26 36 0 c0 -26 36 -26 36 0"/>
+            <path class="capacitor" d="M612 134 V234 M646 134 V234"/>
+            <path class="wire short" d="M602 184 H612 M646 184 H656"/>
+            <path class="ground" d="M98 278 H146 M106 294 H138 M116 310 H128"/>
+            <path class="current-arrow" d="M248 112 H544"/>
+            <path class="vc-arrow" d="M704 130 V232"/>
+            <text class="label" x="72" y="126">u(t)</text>
+            <text class="label" x="248" y="126">R</text>
+            <text class="label" x="458" y="126">L</text>
+            <text class="label" x="616" y="116">C</text>
+            <text class="label" x="348" y="92">i<tspan baseline-shift="sub" font-size="15">L</tspan>(t)</text>
+            <text class="label" x="722" y="184">v<tspan baseline-shift="sub" font-size="15">C</tspan>(t)</text>
+            <text class="small-label" x="64" y="338">x = [ i<tspan baseline-shift="sub" font-size="13">L</tspan>, v<tspan baseline-shift="sub" font-size="13">C</tspan> ]<tspan baseline-shift="super" font-size="13">T</tspan></text>
+          </svg>
+        </div>
+
+        <div class="formula-stack reveal">
+          <article class="info-card">
+            <span>状态方程</span>
+            <p>\(\dot i_L=\frac{u(t)-Ri_L-v_C}{L}\)</p>
+            <p>\(\dot v_C=\frac{i_L}{C}\)</p>
+          </article>
+          <article class="info-card">
+            <span>特征方程</span>
+            <p>\(s^2+\frac{R}{L}s+\frac{1}{LC}=0\)</p>
+          </article>
+          <article class="info-card">
+            <span>传递函数</span>
+            <p>\(H(s)=\frac{1/(LC)}{s^2+\frac{R}{L}s+\frac{1}{LC}}\)</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="simulator" class="section simulator-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Interactive Simulation</p>
+        <h2>交互仿真控制台</h2>
+        <p>调节 R、L、C 与输入类型，实时观察输出波形、极点位置和稳定性结论。</p>
+      </div>
+
+      <div class="simulator-grid">
+        <section class="control-panel glass-card reveal" aria-label="仿真参数控制">
+          <div class="panel-title">
+            <h3>参数控制</h3>
+            <button id="resetBtn" class="icon-btn" type="button" title="恢复默认参数">↺</button>
+          </div>
+
+          <div class="control-row">
+            <label for="rRange">电阻 R <span id="rValue">1.00 Ω</span></label>
+            <input id="rRange" type="range" min="0.1" max="8" step="0.05" value="1">
+            <input id="rNumber" type="number" min="0.1" max="8" step="0.05" value="1" aria-label="电阻 R 数值">
+          </div>
+
+          <div class="control-row">
+            <label for="lRange">电感 L <span id="lValue">1.00 H</span></label>
+            <input id="lRange" type="range" min="0.1" max="5" step="0.05" value="1">
+            <input id="lNumber" type="number" min="0.1" max="5" step="0.05" value="1" aria-label="电感 L 数值">
+          </div>
+
+          <div class="control-row">
+            <label for="cRange">电容 C <span id="cValue">0.25 F</span></label>
+            <input id="cRange" type="range" min="0.05" max="2" step="0.01" value="0.25">
+            <input id="cNumber" type="number" min="0.05" max="2" step="0.01" value="0.25" aria-label="电容 C 数值">
+          </div>
+
+          <fieldset class="input-choice">
+            <legend>输入类型</legend>
+            <label>
+              <input type="radio" name="inputType" value="step" checked>
+              <span>阶跃输入</span>
+            </label>
+            <label>
+              <input type="radio" name="inputType" value="impulse">
+              <span>冲激近似</span>
+            </label>
+          </fieldset>
+
+          <button id="runBtn" class="btn primary full" type="button">运行仿真</button>
+        </section>
+
+        <section class="sim-workbench reveal" aria-label="交互仿真工作台">
+          <div class="result-panel" aria-label="仿真结果">
+            <article class="metric-card">
+              <span>传递函数</span>
+              <strong id="transferText">\(H(s)=\frac{4}{s^2+s+4}\)</strong>
+            </article>
+            <article class="metric-card">
+              <span>当前极点</span>
+              <strong id="polesText">s=-0.5000 ± j1.9365</strong>
+            </article>
+            <article class="metric-card">
+              <span>稳定性</span>
+              <strong id="stabilityText">稳定：极点实部均小于 0</strong>
+            </article>
+            <article class="metric-card">
+              <span>阻尼形态</span>
+              <strong id="dampingText">欠阻尼：共轭复极点</strong>
+            </article>
+          </div>
+
+          <div class="preview-panel glass-card" aria-label="实时预览图表区">
+            <div class="preview-heading">
+              <div>
+                <span>Realtime Preview</span>
+                <strong>响应与极点同步预览</strong>
+              </div>
+              <small>与下方详细图表使用同一份仿真数据</small>
+            </div>
+            <div class="preview-grid">
+              <figure class="preview-card">
+                <figcaption>
+                  <span>v<sub>C</sub>(t)</span>
+                  <strong>波形预览</strong>
+                </figcaption>
+                <canvas id="previewWaveCanvas" width="420" height="240"></canvas>
+              </figure>
+              <figure class="preview-card">
+                <figcaption>
+                  <span>s-plane</span>
+                  <strong>零极点预览</strong>
+                </figcaption>
+                <canvas id="previewPoleCanvas" width="340" height="240"></canvas>
+              </figure>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="detail-heading reveal">
+        <p class="eyebrow">Detailed Analysis</p>
+        <h3>详细图表分析</h3>
+      </div>
+      <div class="charts-grid reveal">
+        <figure class="chart-card glass-card">
+          <figcaption>
+            <span>输出波形</span>
+            <strong>v<sub>C</sub>(t)</strong>
+          </figcaption>
+          <canvas id="waveCanvas" width="860" height="420"></canvas>
+        </figure>
+        <figure class="chart-card glass-card">
+          <figcaption>
+            <span>零极点图</span>
+            <strong>s-plane</strong>
+          </figcaption>
+          <canvas id="poleCanvas" width="520" height="420"></canvas>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section narrow">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Theory Chain</p>
+        <h2>理论链路图</h2>
+        <p>把课堂中的关键概念压缩成一条可展示的分析路径。</p>
+      </div>
+      <div class="theory-chain reveal" aria-label="理论链路">
+        <article><span>\(\delta(t),u(t)\)</span><strong>输入信号</strong></article>
+        <article><span>\(h(t),v_C(t)\)</span><strong>系统响应</strong></article>
+        <article><span>\(\dot{x}=Ax+Bu\)</span><strong>状态方程</strong></article>
+        <article><span>\(\det(sI-A)=0\)</span><strong>特征方程</strong></article>
+        <article><span>\(s_1,s_2\)</span><strong>极点分布</strong></article>
+        <article><span>\(\operatorname{Re}(s)&lt;0\)</span><strong>稳定性</strong></article>
+      </div>
+    </section>
+
+    <section id="slides" class="section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Presentation Gallery</p>
+        <h2>PPT 展示区</h2>
+        <p>共 12 张课堂汇报幻灯片，点击任意缩略图可放大预览。</p>
+      </div>
+      <div id="slideGrid" class="slide-grid reveal" aria-label="PPT 幻灯片列表"></div>
+    </section>
+
+    <section id="download" class="section download-section">
+      <div class="download-card glass-card reveal">
+        <div>
+          <p class="eyebrow">Download</p>
+          <h2>下载汇报材料</h2>
+          <p>提供图片版 PPT 与可编辑 PPT，便于课堂展示、修改和二次汇报。</p>
+        </div>
+        <div class="download-actions">
+          <a class="btn primary" href="assets/image_ppt.pptx" download>下载图片版 PPT</a>
+          <a class="btn ghost" href="assets/editable_ppt.pptx" download>下载可编辑 PPT</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="previewModal" class="modal" aria-hidden="true">
+    <button id="modalClose" class="modal-close" type="button" aria-label="关闭预览">×</button>
+    <img id="modalImage" src="" alt="PPT 幻灯片预览">
+    <p id="modalCaption"></p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
